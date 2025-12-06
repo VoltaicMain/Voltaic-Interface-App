@@ -23,7 +23,7 @@ jobs:
           first_apk=$(ls *.apk 2>/dev/null | head -n 1)
           # Strip the .apk extension and export as global variable
           echo "VERSION=${first_apk%.apk}"
-          echo "VERSION=${first_apk%.apk}" >> $GITHUB_OUTPUT
+          echo "VERSION=${first_apk%.apk}" >> $GITHUB_ENV
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
