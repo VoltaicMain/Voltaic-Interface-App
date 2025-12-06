@@ -1,0 +1,30 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from file
+        id: version
+        run: |
+          first_apk=$(ls *.apk 2>/dev/null | head -n 1)
+          # Strip the .apk extension and export as global variable
+          echo "version=$first_apk"
+          echo "version=$first_apk" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "${{ env.VERSION }}"
+          name: "Release ${{ env.VERSION }}"
+          files: |
+            artifact/**
