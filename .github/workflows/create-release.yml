@@ -18,8 +18,8 @@ jobs:
         run: |
           first_apk=$(ls *.apk 2>/dev/null | head -n 1)
           # Strip the .apk extension and export as global variable
-          echo "version=$first_apk"
-          echo "version=$first_apk" >> $GITHUB_OUTPUT
+          echo "VERSION=${first_apk%.apk}"
+          echo "VERSION=${first_apk%.apk}" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
