@@ -20,11 +20,15 @@ jobs:
           # Strip the .apk extension and export as global variable
           echo "VERSION=${first_apk%.apk}"
           echo "VERSION=${first_apk%.apk}" >> $GITHUB_OUTPUT
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: "${{ env.VERSION }}"
-          name: "Release ${{ env.VERSION }}"
-          files: |
-            artifact/**
+          name: Releases
+          path: ./*.apk
+        
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./*.apk"
+          tag: v${{ env.VERSION }}
